@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="app">
+    <h1>Базовый конвертор</h1>
+    <input type="number" v-bind:placeholder="placeholder1" v-model="valuetoconvert">
+    <p>из</p>
+    <select name="" id="fromrate" v-model="fromrate">
+        <option value="1">USD</option>
+        <option value="2">EUR</option>
+        <option value="3">RUB</option>
+    </select>
+    <p>в</p>
+    <select name="" id="torate" v-model="torate">
+        <option value="1">USD</option>
+        <option value="2">EUR</option>
+        <option value="3">RUB</option>
+    </select>
+    <button @click="convert">Рассчитать</button>
+    <div>
+        <h1 v-if="result != null">Результат конвертации: {{ result }}</h1>
+    </div>
+    <div>
+        <h1>история транзакций</h1>
+        <ul>
+            <li v-for="item in history">
+                {{ item.valuetoconvert }} {{ item.fromrate }} -> {{ item.torate }} = {{ item.result }}
+            </li>
+        </ul>
+    </div>
+    <script src="vue.global.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
