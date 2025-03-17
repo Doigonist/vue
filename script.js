@@ -20,17 +20,6 @@ createApp({
         }
     },
     methods: {
-        convert(){
-            let fromrate_ = this.exchangerates[this.rates[this.fromrate - 1]];
-            let torate_ = this.exchangerates[this.rates[this.torate - 1]];
-            this.result = (this.valuetoconvert * fromrate_ / torate_).toFixed(2);  
-            this.save();
-            
-        },
-        
-
-    },
-    computed: {
         save(){
             try{
                let cool = JSON.parse(localStorage.getItem('conversion'));
@@ -42,20 +31,35 @@ createApp({
                 });
                 localStorage.setItem('conversion', JSON.stringify(cool));
             }catch(e){
-                this.items.push({
-                    valuetoconvert: this.valuetoconvert,
-                    result: this.result,
-                    fromrate: this.rates[this.fromrate - 1],
-                    torate: this.rates[this.torate - 1],
-                });
-                localStorage.setItem('conversion', JSON.stringify(this.items));
+                // this.items.push({
+                //     valuetoconvert: this.valuetoconvert,
+                //     result: this.result,
+                //     fromrate: this.rates[this.fromrate - 1],
+                //     torate: this.rates[this.torate - 1],
+                // });
+                // localStorage.setItem('conversion', JSON.stringify(this.items));
+                console.warn(e);
             }
-        }
+        },
+        convert() {
+                    this.result = this.convertedResult;
+                    this.save();
+        },
+
+    },
+    computed: {
+        convertedResult() {
+                    if (this.valuetoconvert == null) return null;
+
+                    let fromrate_ = this.exchangerates[this.rates[this.fromrate - 1]];
+                    let torate_ = this.exchangerates[this.rates[this.torate - 1]];
+                    return (this.valuetoconvert * fromrate_ / torate_).toFixed(2);
+                }
+
         
     },
     watch: {
         result(newval, oldval){
-            this.save();
             console.log('Данные были сохранены');
         }
     }
